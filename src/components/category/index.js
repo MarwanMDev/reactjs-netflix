@@ -16,7 +16,6 @@ const Category = ({ title, fetchUrl, isLarge }) => {
     fetchData();
   }, [fetchUrl]);
 
-  console.log(movies);
   return (
     <div className="category">
       <h2>{title}</h2>

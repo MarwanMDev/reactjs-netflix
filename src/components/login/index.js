@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './login.css';
 import LOGO from '../../assets/Netflix-logo-red-black-png.png';
 import NETFLIXBG from '../../assets/netflix-bg.jpeg';
-import SignUp from '../signUp';
+import SignUp from '../signIn';
 
 const Login = () => {
   const [signIn, setSignIn] = useState(false);
