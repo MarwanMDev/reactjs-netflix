@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './hero.css';
-import BANNER from '../../assets/banner.png';
+import axios from '../../axios';
+import requests from '../../utils/requests';
 
 const Hero = () => {
+  const [movie, setMovie] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const request = await axios.get(requests.fetchNetflixOriginals);
+
+      setMovie(
+        request.data.results[
+          Math.floor(Math.random() * request.data.results.length - 1)
+        ]
+      );
+    }
+
+    fetchData();
+  }, []);
+
+  console.log(movie);
   function truncate(string, n) {
     return string?.length > n
       ? string.substring(0, n - 1) + '...'
@@ -13,22 +31,21 @@ const Hero = () => {
     <header
       className="hero"
       style={{
-        backgroundImage: `url(${BANNER})`,
+        backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie?.backdrop_path}')`,
         backgroundSzie: 'cover',
         backgroundPosition: 'center center',
       }}
     >
       <div className="banner__contents">
-        <h1 className="banner__title">Movie Name</h1>
+        <h1 className="banner__title">
+          {movie?.title || movie?.name || movie?.original_name}
+        </h1>
         <div className="banner__buttons">
           <button className="banner__button">Play</button>
           <button className="banner__button">My List</button>
         </div>
         <h1 className="banner__description">
-          {truncate(
-            'This is a test description This is a test description This This is a test description This is a test description is aThis is a test description This is a test description testThis is a test description This is a test description ThisThis is a test description This is a test description is atest description description',
-            150
-          )}
+          {truncate(movie?.overview, 150)}
         </h1>
       </div>
 
