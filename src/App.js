@@ -7,6 +7,7 @@ import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, selectUser } from './features/userSlice';
+import Profile from './components/profile';
 
 function App() {
   const user = useSelector(selectUser);
@@ -22,12 +23,12 @@ function App() {
           })
         );
       } else {
-        dispatch(logout);
+        dispatch(logout());
       }
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -37,6 +38,7 @@ function App() {
         ) : (
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         )}
       </BrowserRouter>
